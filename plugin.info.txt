@@ -1,0 +1,7 @@
+base   doodle2
+author Helmut Bartz
+email  rentner_09@gmx.de
+date   2013-02-03
+name   doodlesimple Plugin
+desc   Let users vote for given choices, e.g. to schedule a meeting. 
+url    http://www.dokuwiki.org/plugin:doodlesimple

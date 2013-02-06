@@ -1,0 +1,77 @@
+<?php
+  /**
+   * This is the HTML template for the doodle table.
+   *
+   * I am utilizing the PHP parser as a templating engine:
+   * doodle_tempalte.php is simply included and evaled from syntax.php
+   * The variable  $template   will be inherited from syntax.php and can be used here.
+   */
+  global $ID;
+
+  $template = $this->template;
+  $c = count($template['choices']);
+
+?>
+
+<!-- Doodle Plugin -->
+<form action="<?php echo wl() ?>" method="post" id="<?php echo $template['formId'] ?>" accept-charset="utf-8" >
+
+<input type="hidden" name="sectok" value="<?php echo getSecurityToken() ?>" />
+<input type="hidden" name="do" value="show" />
+<input type="hidden" name="id" value="<?php echo $ID ?>" />
+<input type="hidden" name="formId" value="<?php echo $template['formId'] ?>" />
+
+<table class="inline">
+  <tbody>
+    <tr class="row0">
+      <th class="centeralign" colspan="<?php echo ($c+1) ?>">
+        <?php echo $template['title'] ?>
+      </th>
+    </tr>
+    <tr class="row1">
+        <th class="leftalign"><?php echo $this->getLang('fullname') ?></th>
+<?php foreach ($template['choices'] as $choice) {  ?>
+        <td class="centeralign"><?php echo $choice ?></td>
+<?php } ?>
+    </tr>
+
+<?php foreach ($template['doodleData'] as $fullname => $userData) { ?>
+    <tr>
+        <td>
+          <?php echo $fullname.$userData['username'] ?>
+        </td>
+        <?php for ($col = 0; $col < $c; $col++) {
+            echo $userData['choice'][$col];
+        } ?>        
+    </tr>
+<?php } ?>
+ 
+    <!-- Results / sum per column -->
+    <tr>
+        <th class="rightalign"><b><?php echo $template['result'] ?></b></th>
+<?php for ($col = 0; $col < $c; $col++) { ?>
+        <th class="centeralign"><b><?php echo $template['count'][$col] ?></b></th>
+<?php } ?>
+    </tr>
+
+<?php
+    /* Input fields, if allowed. */
+	echo $template['inputTR'] 
+?>
+
+<?php if (!empty($template['msg'])) { ?>    
+    <tr>
+      <td colspan="<?php echo $c+1 ?>">
+        <?php echo $template['msg'] ?>
+      </td>
+    </tr>
+<?php } ?>
+
+  </tbody>
+</table>
+
+</form>
+
+
+
+
